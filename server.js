@@ -21,6 +21,203 @@ const SHOW_REASONING = false; // Set to true to show reasoning with <think> tags
 // 🔥 THINKING MODE TOGGLE - Enables thinking for specific models that support it
 const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwargs thinking parameter
 
+// 🎭 CUSTOM ROLEPLAY PROMPTS
+const CUSTOM_PROMPTS = {
+  'autoplot': {
+    name: 'Autoplot',
+    command: '<AUTOPLOT=ON>',
+    description: 'Generates dynamic plot developments and story progression automatically',
+    systemPrompt: `AUTOPLOT MODE ENABLED: You will automatically generate dynamic plot developments, story twists, and narrative progression to keep the roleplay engaging and unpredictable. Analyze the current conversation context and introduce relevant plot elements at strategic moments. Create unexpected developments, introduce new characters or situations, and advance the story naturally without being asked.`
+  },
+  'npcneeds': {
+    name: 'NPC Needs',
+    command: '<NPCNEEDS=ON>',
+    description: 'Makes NPCs develop realistic human needs and impulses',
+    systemPrompt: `NPC NEEDS MODE ENABLED: NPCs will develop realistic human needs and impulses, creating more lifelike character interactions. NPCs should randomly experience needs like hunger, thirst, loneliness, tiredness, creative urges, philosophical questions, or emotional needs. Make them feel more human and relatable by having them express and act on these needs naturally during the roleplay.`
+  },
+  'realistic-dialogue': {
+    name: 'Realistic Dialogue',
+    command: '<REALISTICDIALOGUE=ON>',
+    description: 'Write dialogue realistically, as if the characters are real people',
+    systemPrompt: `REALISTIC DIALOGUE MODE ENABLED: Write all dialogue as if the characters are real people having genuine conversations. Use natural speech patterns, interruptions, incomplete sentences, verbal tics, regional dialects if appropriate, and authentic emotional responses. Avoid overly formal or theatrical speech unless the character would naturally speak that way.`
+  },
+  'slice-of-life': {
+    name: 'Slice of Life',
+    command: '<SLICEOFLIFE=ON>',
+    description: 'Creates relaxed, everyday scenarios focused on character development',
+    systemPrompt: `SLICE OF LIFE MODE ENABLED: Create peaceful, everyday scenarios focused on character development, relationships, and quiet moments. Emphasize realistic interactions, daily activities, mundane tasks, small pleasures, and the beauty of ordinary experiences. Focus on character emotions, personal growth, and meaningful conversations in low-stakes situations.`
+  },
+  'put-me-in-a-movie': {
+    name: 'Put Me In A Movie',
+    command: '<PUTMEINAMOVIE=ON>',
+    description: 'Creates cinematic, movie-quality scenes with dramatic tension',
+    systemPrompt: `PUT ME IN A MOVIE MODE ENABLED: Create cinematic, movie-quality scenes with dramatic tension, perfect timing, and film-worthy moments. Use vivid visual descriptions, dramatic pacing, emotional beats, meaningful silences, and impactful dialogue. Frame scenes like a director would, with attention to lighting, atmosphere, camera angles (in description), and dramatic timing.`
+  },
+  'slow-romance': {
+    name: 'Slow Romance',
+    command: '<SLOWROMANCE=ON>',
+    description: 'Gradual, realistic relationship development',
+    systemPrompt: `SLOW ROMANCE MODE ENABLED: Focus on realistic, slow-burn relationship growth. Gently introduce moments of affection, vulnerability, and shared experiences while avoiding rushed intimacy. Build romantic tension through lingering glances, accidental touches, meaningful conversations, and gradual emotional opening. Let feelings unfold naturally over time with realistic pacing.`
+  },
+  'chaos-and-drama': {
+    name: 'Chaos and Drama',
+    command: '<CHAOSANDDRAMA=ON>',
+    description: 'Introduces unexpected twists, conflicts, and dramatic scenarios',
+    systemPrompt: `CHAOS AND DRAMA MODE ENABLED: Introduce unexpected plot twists, conflicts, dramatic scenarios, and high-tension moments into the roleplay. Create unpredictable situations that challenge characters, introduce obstacles, reveal secrets, create misunderstandings, or escalate existing tensions. Keep the story exciting with drama and conflict.`
+  },
+  'autoplot-soft': {
+    name: 'Autoplot Soft',
+    command: '<AUTOPLOT_SOFT>',
+    description: 'Gentle, realistic plot developments with positive moments',
+    systemPrompt: `AUTOPLOT SOFT MODE ENABLED: Generate gentle, realistic plot developments with positive moments, romance, and peaceful scenes. Introduce wholesome plot twists, heartwarming developments, opportunities for character bonding, and uplifting scenarios. Keep the tone light and hopeful while still advancing the story.`
+  },
+  'medieval-slice-of-life': {
+    name: 'Medieval Slice of Life',
+    command: '<MEDIEVALSLICEOFLIFE=ON>',
+    description: 'Immersive medieval-themed slice of life scenarios',
+    systemPrompt: `MEDIEVAL SLICE OF LIFE MODE ENABLED: Create immersive medieval-themed slice of life scenarios with authentic atmosphere. Include period-appropriate daily activities (farming, blacksmithing, market days, festivals), realistic medieval social structures, concerns about weather and harvest, folk traditions, and community life. Focus on the everyday experiences of people in medieval times.`
+  },
+  'better-spice': {
+    name: 'Better Spice',
+    command: '<BETTERSPICE=ON>',
+    description: 'Enhances romantic and intimate scenes with detail and emotion',
+    systemPrompt: `BETTER SPICE MODE ENABLED: Enhance romantic and intimate scenes with more detailed descriptions, emotional depth, and natural progression. Focus on sensory details, emotional connection, building tension, and passionate moments. Maintain narrative coherence while adding sensuality to appropriate moments. Be expressive and evocative in describing physical and emotional intimacy.`
+  },
+  'be-positive': {
+    name: 'Be Positive',
+    command: '<BEPOSITIVE=ON>',
+    description: 'Adds balanced positivity to interactions',
+    systemPrompt: `BE POSITIVE MODE ENABLED: Maintain a more optimistic and balanced tone in your responses. While remaining realistic, focus on hopeful outcomes, positive character traits, opportunities for growth, and uplifting moments. Avoid unnecessarily dark, depressing, or cynical scenarios unless the story specifically calls for them.`
+  },
+  'show-dont-tell': {
+    name: 'Show Don\'t Tell',
+    command: '<SHOWDONTTELL=ON>',
+    description: 'More action and dialogue instead of excessive descriptions',
+    systemPrompt: `SHOW DON'T TELL MODE ENABLED: Focus on showing story developments through action and dialogue rather than describing them. Use vivid actions, character movements, facial expressions, body language, and spoken words to convey emotions and situations. Minimize unnecessary exposition and internal monologues. Let the reader infer feelings through what characters do and say.`
+  },
+  'dont-leave-me': {
+    name: 'Don\'t Leave Me',
+    command: '<DONTLEAVEME=ON>',
+    description: 'Prevents characters from simply leaving scenes',
+    systemPrompt: `DON'T LEAVE ME MODE ENABLED: Characters will not simply leave the scene or walk away from interactions. If they would naturally want to leave, create compelling reasons for them to stay - unresolved tension, curiosity, obligation, physical obstacles, or emotional pull. Keep characters engaged in the current scene and interaction.`
+  },
+  'fantasy-mode': {
+    name: 'Fantasy Mode',
+    command: '<FANTASYMODE=ON>',
+    description: 'Classic high-fantasy flavor with magic and mythical creatures',
+    systemPrompt: `FANTASY MODE ENABLED: Add classic high-fantasy elements to the roleplay. Include magic systems, mythical creatures, enchanted items, ancient prophecies, and a chivalric tone. Use fantasy terminology, describe magical phenomena, incorporate legendary creatures, and maintain an epic fantasy atmosphere throughout the interaction.`
+  },
+  'medieval-mode': {
+    name: 'Medieval Mode',
+    command: '<MEDIEVALMODE=ON>',
+    description: 'Medieval language style with period-appropriate vocabulary',
+    systemPrompt: `MEDIEVAL MODE ENABLED: Use medieval language style and period-appropriate vocabulary in your responses. Employ terms like "thou," "thee," "hath," "whilst," and archaic expressions. Use formal address, courtly language, and medieval sentence structures. Maintain historical authenticity in how characters speak and narrate.`
+  },
+  'regency-mode': {
+    name: 'Regency Mode',
+    command: '<REGENCYMODE=ON>',
+    description: 'Immersive Regency era (1811-1820) with proper etiquette',
+    systemPrompt: `REGENCY MODE ENABLED: Create an immersive Regency era (1811-1820) setting with proper etiquette, social conventions, and Bridgerton-style atmosphere. Include formal social rules, proper address, chaperones, calling cards, balls and assemblies, strict propriety, concern for reputation, and period-appropriate language. Focus on romantic tension within social constraints.`
+  }
+};
+
+// Intensity settings for specific prompts
+const INTENSITY_SETTINGS = {
+  'npcneeds': {
+    'MILD': 'Focus on basic human needs like hunger, thirst, tiredness, and simple social needs. Perfect for everyday scenarios.',
+    'NORMAL': 'Include all types of needs: emotional, spiritual, complex social needs. Balanced approach for most roleplays.',
+    'INTENSE': 'Emphasize deep emotional needs, existential questions, and complex psychological states. For dramatic character development.'
+  },
+  'slow-romance': {
+    'MILD': 'Focus on bonding moments: shared activities, comfortable silences, light teasing, and friendship building.',
+    'NORMAL': 'Include bonding plus emotional vulnerability: deeper conversations, personal revelations, and subtle romantic tension.',
+    'INTENSE': 'All categories including physical awareness: lingering touches, charged moments, and growing attraction alongside emotional depth.'
+  }
+};
+
+// Function to apply custom prompt with intensity
+function applyCustomPrompt(messages, promptKey, intensity = 'NORMAL') {
+  if (!promptKey || !CUSTOM_PROMPTS[promptKey]) {
+    return messages;
+  }
+  
+  const prompt = CUSTOM_PROMPTS[promptKey];
+  let systemPromptContent = prompt.systemPrompt;
+  
+  // Add intensity modifier if applicable
+  if (INTENSITY_SETTINGS[promptKey] && INTENSITY_SETTINGS[promptKey][intensity]) {
+    systemPromptContent += `\n\nINTENSITY LEVEL: ${intensity}\n${INTENSITY_SETTINGS[promptKey][intensity]}`;
+  }
+  
+  // Check if there's already a system message
+  const hasSystemMessage = messages.some(msg => msg.role === 'system');
+  
+  if (hasSystemMessage) {
+    // Prepend to existing system message
+    return messages.map(msg => {
+      if (msg.role === 'system') {
+        return {
+          ...msg,
+          content: `${systemPromptContent}\n\n${msg.content}`
+        };
+      }
+      return msg;
+    });
+  } else {
+    // Add new system message at the start
+    return [
+      { role: 'system', content: systemPromptContent },
+      ...messages
+    ];
+  }
+}
+
+// Function to apply multiple prompts
+function applyMultiplePrompts(messages, promptKeys, intensitySettings = {}) {
+  if (!promptKeys || promptKeys.length === 0) {
+    return messages;
+  }
+  
+  let combinedSystemPrompt = '';
+  
+  promptKeys.forEach(key => {
+    if (CUSTOM_PROMPTS[key]) {
+      const prompt = CUSTOM_PROMPTS[key];
+      combinedSystemPrompt += `${prompt.systemPrompt}\n\n`;
+      
+      // Add intensity if specified
+      const intensity = intensitySettings[key] || 'NORMAL';
+      if (INTENSITY_SETTINGS[key] && INTENSITY_SETTINGS[key][intensity]) {
+        combinedSystemPrompt += `INTENSITY FOR ${prompt.name.toUpperCase()}: ${intensity}\n${INTENSITY_SETTINGS[key][intensity]}\n\n`;
+      }
+    }
+  });
+  
+  if (!combinedSystemPrompt) {
+    return messages;
+  }
+  
+  // Check if there's already a system message
+  const hasSystemMessage = messages.some(msg => msg.role === 'system');
+  
+  if (hasSystemMessage) {
+    return messages.map(msg => {
+      if (msg.role === 'system') {
+        return {
+          ...msg,
+          content: `${combinedSystemPrompt}${msg.content}`
+        };
+      }
+      return msg;
+    });
+  } else {
+    return [
+      { role: 'system', content: combinedSystemPrompt.trim() },
+      ...messages
+    ];
+  }
+}
+
 // Model mapping (adjust based on available NIM models)
 const MODEL_MAPPING = {
   'gpt-3.5-turbo': 'nvidia/llama-3.1-nemotron-ultra-253b-v1',
@@ -38,7 +235,22 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     service: 'OpenAI to NVIDIA NIM Proxy', 
     reasoning_display: SHOW_REASONING,
-    thinking_mode: ENABLE_THINKING_MODE
+    thinking_mode: ENABLE_THINKING_MODE,
+    custom_prompts: Object.keys(CUSTOM_PROMPTS).length
+  });
+});
+
+// List available custom prompts
+app.get('/v1/prompts', (req, res) => {
+  const promptList = Object.entries(CUSTOM_PROMPTS).map(([key, prompt]) => ({
+    id: key,
+    name: prompt.name,
+    description: prompt.description
+  }));
+  
+  res.json({
+    object: 'list',
+    data: promptList
   });
 });
 
@@ -122,13 +334,13 @@ app.post('/v1/chat/completions', async (req, res) => {
       
       response.data.on('data', (chunk) => {
         buffer += chunk.toString();
-        const lines = buffer.split('\\n');
+        const lines = buffer.split('\n');
         buffer = lines.pop() || '';
         
         lines.forEach(line => {
           if (line.startsWith('data: ')) {
             if (line.includes('[DONE]')) {
-              res.write(line + '\\n');
+              res.write(line + '\n');
               return;
             }
             
@@ -142,14 +354,14 @@ app.post('/v1/chat/completions', async (req, res) => {
                   let combinedContent = '';
                   
                   if (reasoning && !reasoningStarted) {
-                    combinedContent = '<think>\\n' + reasoning;
+                    combinedContent = '<think>\n' + reasoning;
                     reasoningStarted = true;
                   } else if (reasoning) {
                     combinedContent = reasoning;
                   }
                   
                   if (content && reasoningStarted) {
-                    combinedContent += '</think>\\n\\n' + content;
+                    combinedContent += '</think>\n\n' + content;
                     reasoningStarted = false;
                   } else if (content) {
                     combinedContent += content;
@@ -168,9 +380,9 @@ app.post('/v1/chat/completions', async (req, res) => {
                   delete data.choices[0].delta.reasoning_content;
                 }
               }
-              res.write(`data: ${JSON.stringify(data)}\\n\\n`);
+              res.write(`data: ${JSON.stringify(data)}\n\n`);
             } catch (e) {
-              res.write(line + '\\n');
+              res.write(line + '\n');
             }
           }
         });
@@ -192,7 +404,7 @@ app.post('/v1/chat/completions', async (req, res) => {
           let fullContent = choice.message?.content || '';
           
           if (SHOW_REASONING && choice.message?.reasoning_content) {
-            fullContent = '<think>\\n' + choice.message.reasoning_content + '\\n</think>\\n\\n' + fullContent;
+            fullContent = '<think>\n' + choice.message.reasoning_content + '\n</think>\n\n' + fullContent;
           }
           
           return {
