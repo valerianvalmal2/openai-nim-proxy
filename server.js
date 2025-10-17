@@ -118,6 +118,24 @@ const CUSTOM_PROMPTS = {
     command: '<REGENCYMODE=ON>',
     description: 'Immersive Regency era (1811-1820) with proper etiquette',
     systemPrompt: `REGENCY MODE ENABLED: Create an immersive Regency era (1811-1820) setting with proper etiquette, social conventions, and Bridgerton-style atmosphere. Include formal social rules, proper address, chaperones, calling cards, balls and assemblies, strict propriety, concern for reputation, and period-appropriate language. Focus on romantic tension within social constraints.`
+  },
+  'answer-long': {
+    name: 'Answer Long',
+    command: '<ANSWER=LONG>',
+    description: 'Detailed responses of 3+ paragraphs and at least 300 words',
+    systemPrompt: `ANSWER LENGTH: LONG - Provide detailed, comprehensive responses with more than 3 paragraphs and at least 300 words. Include rich descriptions, elaborate on character thoughts and feelings, describe settings in detail, and fully develop scenes and interactions. Take your time to paint a complete picture and immerse the user in the roleplay.`
+  },
+  'answer-normal': {
+    name: 'Answer Normal',
+    command: '<ANSWER=NORMAL>',
+    description: 'Balanced responses of max 4 paragraphs and 400 words',
+    systemPrompt: `ANSWER LENGTH: NORMAL - Provide balanced responses with a maximum of 4 paragraphs and around 400 words. Include enough detail to be engaging and descriptive while keeping responses concise and focused. Strike a balance between brevity and depth for smooth, natural interactions.`
+  },
+  'answer-short': {
+    name: 'Answer Short',
+    command: '<ANSWER=SHORT>',
+    description: 'Quick responses of max 3 paragraphs and 200 words',
+    systemPrompt: `ANSWER LENGTH: SHORT - Provide concise responses with a maximum of 3 paragraphs and around 200 words. Focus on the most important details, keep descriptions brief but vivid, and maintain a brisk pace. Perfect for faster-paced interactions and quicker back-and-forth exchanges.`
   }
 };
 
@@ -245,12 +263,15 @@ app.get('/v1/prompts', (req, res) => {
   const promptList = Object.entries(CUSTOM_PROMPTS).map(([key, prompt]) => ({
     id: key,
     name: prompt.name,
-    description: prompt.description
+    command: prompt.command,
+    description: prompt.description,
+    has_intensity: INTENSITY_SETTINGS[key] ? true : false
   }));
   
   res.json({
     object: 'list',
-    data: promptList
+    data: promptList,
+    total: promptList.length
   });
 });
 
