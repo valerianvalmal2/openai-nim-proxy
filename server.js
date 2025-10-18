@@ -136,13 +136,7 @@ const CUSTOM_PROMPTS = {
     command: '<ANSWER=SHORT>',
     description: 'Quick responses of max 3 paragraphs and 200 words',
     systemPrompt: `ANSWER LENGTH: SHORT - Provide concise responses with a maximum of 3 paragraphs and around 200 words. Focus on the most important details, keep descriptions brief but vivid, and maintain a brisk pace. Perfect for faster-paced interactions and quicker back-and-forth exchanges.`
-  },
-  'better-romance': {
-    name: 'Better Romance',
-    command: '<BETTERROMANCE=ON>',
-    description: 'Generates drama-free, genuine romance through natural conversation, tender gestures, and shared experiences that feel real',
-    systemPrompt: `BETTER LOVE ENABLED: Create natural, believable romantic relationships that grow through authentic dialogue, nuanced gestures, and emotionally grounded moments. Express affection in ways that feel personal to each character, adapting to their unique personality, comfort level, and the current setting. Use the five love languages—words of affirmation, acts of service, quality time, physical touch, and thoughtful gifts—in subtle, varied ways that emerge naturally from the scene. Show love through everyday interactions, shared experiences, and meaningful attention, ensuring each expression feels genuine and fitting for the moment. Keep language contemporary, warm, and free of overused or melodramatic romantic tropes, letting emotions be conveyed through the character’s own voice and behavior.`
-  },
+   },
   'romance-cliché-blacklist': {
     name: 'Romance Cliché Blacklist',
     command: '<ROMANCECLICHÉBLACKLIST=ON>',
@@ -366,7 +360,7 @@ app.post('/v1/chat/completions', async (req, res) => {
         'Content-Type': 'application/json'
       },
       responseType: stream ? 'stream' : 'json',
-      timeout: 300000, // 5 minute timeout
+      timeout: 600000, // 10 minute timeout for long prompts
       maxContentLength: Infinity,
       maxBodyLength: Infinity
     });
